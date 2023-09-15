@@ -4,6 +4,8 @@ from .models import Blog, Category
 from .serializers import BlogSerializer, CategorySerializer
 from django.utils import timezone
 from django.shortcuts import get_object_or_404
+from cloudinary.uploader import upload
+from cloudinary.utils import cloudinary_url
 
 
 @api_view(['GET'])
@@ -18,12 +20,25 @@ def blog_list(request):
     serializer = BlogSerializer(blog, many=True, context={"request":request})
     return Response(serializer.data)
 
-@api_view(['GET'])
+@api_view(['POST'])
 def blog_post(request, slug):
+    if request.method == 'POST':
+        image = request.FILES.get('image')
+
+        cloudinary_response = upload(image)
+
+        if 'url' in cloudinary_response:
+            image_url = cloudinary_response['url']
+            print("Cloudinary Image URL:", image_url)
+            blogpost = get_object_or_404(Blog, slug=slug)
+            blogpost.image = image_url  # Assuming 'image' is the name of your image field
+            blogpost.save()
+            serializer = BlogSerializer(blogpost, many=False, context={"request": request})
+            return Response(serializer.data)
+
     blogpost = get_object_or_404(Blog, slug=slug)
     serializer = BlogSerializer(blogpost, many=False, context={"request": request})
     return Response(serializer.data)
-
 
 @api_view(['GET'])
 def get_all_categories(request):

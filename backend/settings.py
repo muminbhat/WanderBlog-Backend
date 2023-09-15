@@ -56,6 +56,9 @@ INSTALLED_APPS = [
     'users',
     'blogs',
     'newsletter',
+
+    # Content Delivery
+    'cloudinary',
 ]
 
 MIDDLEWARE = [
@@ -200,9 +203,6 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
 }
 
-# Media Config
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
 
 # Cors
 from corsheaders.defaults import default_headers
@@ -215,3 +215,17 @@ CORS_ALLOW_HEADERS = default_headers + (
 # Hosting
 STATICFILES_DIRS = [BASE_DIR/'static',]
 STATIC_ROOT = BASE_DIR/'staticfiles'
+
+# Content Delivery
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+          
+cloudinary.config( 
+  cloud_name = "dxlzb8s4y", 
+  api_key = "294815647831565", 
+  api_secret = "qID8z6MUQNuUinZ39t-lqW_P1QM" 
+)
+
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'

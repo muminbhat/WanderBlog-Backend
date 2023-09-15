@@ -12,3 +12,12 @@ class BlogSerializer(serializers.ModelSerializer):
     class Meta:
         model = Blog 
         fields = '__all__'
+
+    # Add this method to customize the representation of the 'image' field
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+
+        # Modify the representation of the 'image' field to include the Cloudinary URL
+        representation['image'] = instance.image.url
+
+        return representation

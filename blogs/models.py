@@ -2,6 +2,8 @@ from django.db import models
 from django.utils import timezone
 from django.utils.text import slugify
 from django.core.exceptions import ValidationError
+from cloudinary.models import CloudinaryField
+
 
 # Create your models here.
 class Category(models.Model):
@@ -16,7 +18,7 @@ class Blog(models.Model):
     author = models.CharField(max_length=255)
     read_time = models.IntegerField()
     publish_time = models.DateTimeField(default=timezone.now)
-    image = models.ImageField(upload_to='blogs/', blank=True,)
+    image = CloudinaryField('image')
     info = models.CharField(max_length=1000, null=True)
     content = models.TextField()
     tags = models.CharField(max_length=100)
