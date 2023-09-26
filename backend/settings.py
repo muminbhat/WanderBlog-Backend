@@ -213,6 +213,7 @@ CORS_ALLOW_HEADERS = default_headers + (
 
 # Hosting
 STATICFILES_DIRS = [
+os.path.join(BASE_DIR, 'static'),
 os.path.join(BASE_DIR, 'static', 'admin'),
 os.path.join(BASE_DIR, 'static', 'cloudinary'),
 os.path.join(BASE_DIR, 'static', 'jazzmin'),
