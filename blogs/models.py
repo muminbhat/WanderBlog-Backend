@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.utils.text import slugify
 from django.core.exceptions import ValidationError
+from ckeditor.fields import RichTextField
 from cloudinary.models import CloudinaryField
 
 
@@ -20,7 +21,7 @@ class Blog(models.Model):
     publish_time = models.DateTimeField(default=timezone.now)
     image = CloudinaryField('image')
     info = models.CharField(max_length=1000, null=True)
-    content = models.TextField()
+    content = RichTextField(blank=False, null=False)
     tags = models.CharField(max_length=100)
     status = models.BooleanField(default=False)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)

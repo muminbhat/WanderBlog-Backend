@@ -37,3 +37,15 @@ def get_blog_by_category(request, category_id):
     blog = Blog.objects.filter(category_id=category_id)
     serializer = BlogSerializer(blog, many=True)
     return Response(serializer.data)
+
+from django.http import JsonResponse
+from cloudinary.uploader import upload
+
+@api_view(['POST'])
+def upload_to_cloudinary(request):
+    if request.method == 'POST' and request.FILES.get('upload'):
+        uploaded_file = request.FILES['upload']
+        result = upload(uploaded_file)  # Upload the file to Cloudinary
+        # Return a JSON response with the Cloudinary URL
+        return Response({'url': result['secure_url']}, status=status.HTTP_201_CREATED)
+    return Response({'error': 'Invalid request'}, status=status.HTTP_400_BAD_REQUEST)
