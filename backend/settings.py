@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-ps-e@3wea!)$3vvy6l!6zy-bd#)91-*k6p_xvv-(z&z-fmgiu@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -211,9 +211,14 @@ CORS_ALLOW_HEADERS = default_headers + (
     'Access-Control-Allow-Origin',
 )
 
-
 # Hosting
-STATICFILES_DIRS = os.path.join(BASE_DIR, 'static'),
+STATICFILES_DIRS = [
+os.path.join(BASE_DIR, 'static', 'admin'),
+os.path.join(BASE_DIR, 'static', 'cloudinary'),
+os.path.join(BASE_DIR, 'static', 'jazzmin'),
+os.path.join(BASE_DIR, 'static', 'rest_framework'),
+os.path.join(BASE_DIR, 'static', 'vendor'),
+]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
 
 # Content Delivery
