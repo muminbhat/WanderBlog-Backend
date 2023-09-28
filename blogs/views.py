@@ -25,12 +25,13 @@ def blog_post(request, slug):
 
 @api_view(['GET'])
 def get_all_categories(request):
-    all_categories = Category.objects.all()
+    all_categories = Category.objects.all().order_by('-id')
     serializer = CategorySerializer(all_categories, many=True)
     return Response(serializer.data)
 
 @api_view(['GET'])
-def get_blog_by_category(request, category_id):
-    blog = Blog.objects.filter(category_id=category_id)
+def get_blog_by_category(request, category_name):
+    category = get_object_or_404(Category, name__iexact=category_name)
+    blog = Blog.objects.filter(category=category)
     serializer = BlogSerializer(blog, many=True)
     return Response(serializer.data)

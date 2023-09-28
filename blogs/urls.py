@@ -6,7 +6,7 @@ urlpatterns = [
     path('all/', blog_list, name='blogs'),
     path('<str:slug>/', blog_post, name='blogpost'),
     path('categories/all/', get_all_categories, name='all_categories'),
-    path('category/<int:category_id>/', get_blog_by_category, name='blg-by-category'),
+    path('category/<str:category_name>/', get_blog_by_category, name='blg-by-category'),
 
 
 ]
